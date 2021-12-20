@@ -28,7 +28,7 @@ public class Mailthread extends Thread{
 	@Override
 	public synchronized void run() {
 		 try {
-			 Thread.sleep(1000);
+			Thread.sleep(1000);
 			logger.debug("thread Started");
 			mailService.sendSimpleMessage(Email, "Register Sucessfully",
 					"Welcome " + Name);

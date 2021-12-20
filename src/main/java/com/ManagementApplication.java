@@ -39,8 +39,8 @@ public class ManagementApplication implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
-	Registration();
-	Country();
+	//Registration();
+	//Country();
 	}
 
 	
