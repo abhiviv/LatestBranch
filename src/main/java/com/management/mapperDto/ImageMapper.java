@@ -21,6 +21,7 @@ public class ImageMapper {
 		BeanUtils.copyProperties(imagesTable, imageDto);
 		imageDto.setCategoryName(imagesTable.getCategory().getCategoryName());
 		imageDto.setUploadBy(imagesTable.getRegistration().getName());
+		imageDto.setPath("http://localhost:8080/files/CategoryImage/"+imagesTable.getCategory().getCategoryName()+"/"+imagesTable.getImages());
 		return imageDto;
 	}
 	

@@ -7,6 +7,7 @@ public class ImageDto {
     private String imageDetails;
 	private String images;
 	private String categoryName;
+	private String path;
 	private String UploadBy;
 	
 	public Long getImageId() {
@@ -38,6 +39,12 @@ public class ImageDto {
 	}
 	public void setUploadBy(String uploadBy) {
 		UploadBy = uploadBy;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
 	

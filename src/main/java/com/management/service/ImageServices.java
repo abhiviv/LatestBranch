@@ -115,4 +115,9 @@ public class ImageServices {
 	public void cpimagedata(ImagesTable newImagesTable,ImagesTable existingImagesTable) {
 		existingImagesTable.setImageDetails(newImagesTable.getImageDetails());
 	}
+	
+	public ImageDto imageDto(Long Id) {
+		ImagesTable imagesTable=imageRepository.findById(Id).get();
+		return imageMapper.imageDto(imagesTable);
+	}
 }
