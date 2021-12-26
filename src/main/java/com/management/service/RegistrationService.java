@@ -61,13 +61,13 @@ public class RegistrationService {
 	public RegistrationDto getuserdetails() {
 		Object authentication = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String loggedInUserEmailId = (String) authentication;
-		Registration loginusers = registrationRepository.findByEmail(loggedInUserEmailId);
+		Registration loginusers = registrationRepository.findByEmailIgnoreCase(loggedInUserEmailId);
 		return registrationDtomapper.registrationDto(loginusers);
 	}
 
 	public Boolean registration(Registration registration) {
 		String EmailId = registration.getEmail();
-		Registration checkDublicate = registrationRepository.findByEmail(EmailId);
+		Registration checkDublicate = registrationRepository.findByEmailIgnoreCase(EmailId);
 		if (checkDublicate != null) {
 			logger.error(EmailId);
 			throw new com.management.exception.CustomeException(messageSource.getMessage("api.error.user.already.registered", null, Locale.ENGLISH), "",
@@ -84,7 +84,7 @@ public class RegistrationService {
 
 	public Boolean UserRegistartion(Registration registration) {
 		String EmailId = registration.getEmail();
-		Registration checkDublicate = registrationRepository.findByEmail(EmailId);
+		Registration checkDublicate = registrationRepository.findByEmailIgnoreCase(EmailId);
 		if (checkDublicate != null) {
 			throw new com.management.exception.CustomeException(messageSource.getMessage("api.error.user.already.registered", null, Locale.ENGLISH), "",
 					"", "", "if and issued contact us");
@@ -99,7 +99,7 @@ public class RegistrationService {
 	}
 
 	public Boolean CheckDublicate(String EmailId) {
-		Registration checkDublicate = registrationRepository.findByEmail(EmailId);
+		Registration checkDublicate = registrationRepository.findByEmailIgnoreCase(EmailId);
 		if (checkDublicate != null) {
 			return false;
 		}
@@ -109,7 +109,7 @@ public class RegistrationService {
 	public Registration updateData(Registration registration) {
 		Object authentication = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String loggedInUserEmailId = (String) authentication;
-		Registration checkDublicate = registrationRepository.findByEmail(loggedInUserEmailId);
+		Registration checkDublicate = registrationRepository.findByEmailIgnoreCase(loggedInUserEmailId);
 		
 		if (checkDublicate != null) {
 			if(registration.getEmail().isEmpty() || registration.getName().isEmpty()) {
@@ -168,7 +168,7 @@ public class RegistrationService {
 	public org.springframework.http.ResponseEntity.BodyBuilder uploadImage(MultipartFile file) throws IOException {
 		Object authentication = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String loggedInUserEmailId = (String) authentication;
-		Registration loginusers = registrationRepository.findByEmail(loggedInUserEmailId);
+		Registration loginusers = registrationRepository.findByEmailIgnoreCase(loggedInUserEmailId);
 		if (loginusers != null) {
 			System.out.println("Original Image Byte Size - " + file.getBytes().length);
 			loginusers.setPicByte(compressBytes(file.getBytes()));

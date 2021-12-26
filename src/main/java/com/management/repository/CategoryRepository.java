@@ -8,6 +8,6 @@ import com.management.entity.ImageCategory;
 @Repository
 public interface CategoryRepository  extends JpaRepository<ImageCategory, Long>{
 
-	ImageCategory findByCategoryName(String categoryName);
+	ImageCategory findByCategoryNameIgnoreCase(String categoryName);
 	
 }

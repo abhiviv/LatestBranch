@@ -54,7 +54,7 @@ public class ImageServices {
 	public List<ImagesTable> save(MultipartFile[] files, Long id) {
 		Object authentication = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String loggedInUserEmailId = (String) authentication;
-		Registration loginusers = registrationRepository.findByEmail(loggedInUserEmailId);
+		Registration loginusers = registrationRepository.findByEmailIgnoreCase(loggedInUserEmailId);
         try {
         	ImageCategory imageCategory=categoryRepository.findById(id).get();
         	List<ImagesTable>imagesTable=new ArrayList<>();
@@ -119,5 +119,10 @@ public class ImageServices {
 	public ImageDto imageDto(Long Id) {
 		ImagesTable imagesTable=imageRepository.findById(Id).get();
 		return imageMapper.imageDto(imagesTable);
+	}
+	
+	public List<ImageDto> relatedImage(String CategoryName) {
+		List<ImagesTable> imagesTable= imageRepository.findByCategoryCategoryNameIgnoreCase(CategoryName);
+		return imagesTable.stream().map(imageMapper::imageDto).collect(Collectors.toList());
 	}
 }

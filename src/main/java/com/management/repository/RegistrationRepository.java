@@ -11,7 +11,7 @@ import com.management.entity.Registration;
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
 
 	
-	Registration findByEmail(String emailId);
+	Registration findByEmailIgnoreCase(String emailId);
 	
 	List<Registration> findByRole(String role);
 

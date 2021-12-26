@@ -19,7 +19,7 @@ public class JWTUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		Muser muser=null;
-		muser=registrationRepository.findByEmail(username);
+		muser=registrationRepository.findByEmailIgnoreCase(username);
 		 if (muser == null) {
 				throw new CustomeException("Check username",
 				          "",

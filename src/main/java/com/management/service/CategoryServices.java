@@ -46,7 +46,7 @@ public class CategoryServices {
 	private MessageSource messageSource;
 
 	public ImageCategory saveImageCategory(ImageCategory imageCategory) {
-		ImageCategory imageCategory2=categoryRepository.findByCategoryName(imageCategory.getCategoryName());
+		ImageCategory imageCategory2=categoryRepository.findByCategoryNameIgnoreCase(imageCategory.getCategoryName());
 		if(imageCategory2!=null) {
 			throw new com.management.exception.CustomeException(messageSource.getMessage("api.error.category.allready", null, Locale.ENGLISH), "",
 					"Enter different ", "then click Submit", "if and issued contact us");

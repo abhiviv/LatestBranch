@@ -41,4 +41,10 @@ public class PublicController {
 		return imageServices.imageDto(id);
 		
 	}
+	
+	@GetMapping(path = "/getRelatedImg/{Name}")
+	public List<ImageDto> relatedImg(@PathVariable("Name")String Name) {
+		return imageServices.relatedImage(Name);
+		
+	}
 }
