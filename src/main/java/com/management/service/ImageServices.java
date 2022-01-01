@@ -22,12 +22,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.management.dto.ImageDto;
 import com.management.entity.ImageCategory;
+import com.management.entity.ImageSearch;
 import com.management.entity.ImagesTable;
 import com.management.entity.Registration;
 import com.management.mapperDto.ImageMapper;
 import com.management.repository.CategoryRepository;
 import com.management.repository.ImageRepository;
 import com.management.repository.RegistrationRepository;
+import com.management.repository.SolrRepository;
 import com.management.security.SecurityUtils;
 
 import org.springframework.data.domain.Sort;
@@ -51,6 +53,9 @@ public class ImageServices {
 	@Autowired
 	private RegistrationService registrationService; 
 	
+	@Autowired
+	private SolrRepository solrRepository;
+	
 	public List<ImagesTable> save(MultipartFile[] files, Long id) {
 		Object authentication = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String loggedInUserEmailId = (String) authentication;
@@ -68,14 +73,23 @@ public class ImageServices {
                     	img.setImages(file.getOriginalFilename());
                     	img.setRegistration(loginusers);
                     	img.setCategory(imageCategory);
-                    	img.setImageDetails(file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf('.')));
-                    	imagesTable.add(img);
-                    
+                    	String details=file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf('.'));
+                    	details.replace('-', ' ');    
+                    	img.setImageDetails(details);
+                    	imagesTable.add(img);	
                 } catch (IOException e) {
                    logger.error("error", e);
                 }
             });
         	imageRepository.saveAll(imagesTable);
+        	imagesTable.forEach(im->{
+        		ImageSearch image=new  ImageSearch();
+            	image.setImageid(im.getImageId());
+            	image.setImageName(im.getImages());
+            	image.setImageDescription(im.getImageDetails());
+            	solrRepository.save(image);
+        	});
+        	
 
             return imagesTable;
 		} catch (Exception e) {
