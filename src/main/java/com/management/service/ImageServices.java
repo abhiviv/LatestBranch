@@ -87,6 +87,7 @@ public class ImageServices {
             	image.setImageid(im.getImageId());
             	image.setImageName(im.getImages());
             	image.setImageDescription(im.getImageDetails());
+            	image.setCategory(imageCategory.getCategoryName());
             	solrRepository.save(image);
         	});
         	
@@ -123,6 +124,9 @@ public class ImageServices {
 	public ImagesTable upadateimagesTable(ImagesTable imagesTable) {
 		ImagesTable imagesTable2=imageRepository.findById(imagesTable.getImageId()).get();
 		cpimagedata(imagesTable, imagesTable2);
+		SolrThread solrThread=new  SolrThread(solrRepository,imagesTable2.getImageId(),imagesTable2.getImages(),imagesTable2.getImageDetails(),imagesTable2.getCategory().getCategoryName());
+		Thread t1=new Thread(solrThread);
+		t1.start();
 		return imageRepository.save(imagesTable2);
 		
 	}
@@ -138,5 +142,9 @@ public class ImageServices {
 	public List<ImageDto> relatedImage(String CategoryName) {
 		List<ImagesTable> imagesTable= imageRepository.findByCategoryCategoryNameIgnoreCase(CategoryName);
 		return imagesTable.stream().map(imageMapper::imageDto).collect(Collectors.toList());
+	}
+	
+	public List<ImageSearch> imageSearchs(String Name){
+		return solrRepository.findByCategoryStartingWith(Name);
 	}
 }

@@ -17,7 +17,11 @@ public class ImageSearch {
 
 	@Indexed(name = "idesc", type = "string")
 	private String ImageDescription;
-
+	
+	@Indexed(name = "category",type = "string")
+    private String category;
+	
+	
 	public Long getImageid() {
 		return imageid;
 	}
@@ -40,6 +44,14 @@ public class ImageSearch {
 
 	public void setImageDescription(String imageDescription) {
 		ImageDescription = imageDescription;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	

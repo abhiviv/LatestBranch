@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.management.dto.CategoryDto;
 import com.management.dto.ImageDto;
+import com.management.entity.ImageSearch;
 import com.management.entity.ImagesTable;
 import com.management.service.CategoryServices;
 import com.management.service.ImageServices;
@@ -46,5 +47,10 @@ public class PublicController {
 	public List<ImageDto> relatedImg(@PathVariable("Name")String Name) {
 		return imageServices.relatedImage(Name);
 		
+	}
+	
+	@GetMapping(path = "/getSearchImageList/{name}")
+	public List<ImageSearch> imageSearch(@PathVariable("name")String name) {
+		return imageServices.imageSearchs(name);
 	}
 }
