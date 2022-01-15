@@ -4,6 +4,7 @@ package com.management.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.management.entity.ImagesTable;
@@ -12,6 +13,8 @@ import com.management.entity.ImagesTable;
 public interface ImageRepository extends JpaRepository<ImagesTable, Long>{
 
 	
-   List<ImagesTable> findByCategoryCategoryNameIgnoreCase(String CategoryName);
+   @Query("SELECT b FROM ImagesTable b INNER JOIN b.category c WHERE c.categoryName IN (:CategoryName)  ORDER BY RANDOM()")
+   List<ImagesTable> findTop5ByCategoryCategoryNameIgnoreCase(String CategoryName);
+
 	
 }

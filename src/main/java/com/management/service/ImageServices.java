@@ -140,7 +140,7 @@ public class ImageServices {
 	}
 	
 	public List<ImageDto> relatedImage(String CategoryName) {
-		List<ImagesTable> imagesTable= imageRepository.findByCategoryCategoryNameIgnoreCase(CategoryName);
+		List<ImagesTable> imagesTable= imageRepository.findTop5ByCategoryCategoryNameIgnoreCase(CategoryName);
 		return imagesTable.stream().map(imageMapper::imageDto).collect(Collectors.toList());
 	}
 	
