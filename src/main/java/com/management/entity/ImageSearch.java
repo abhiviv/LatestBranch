@@ -21,6 +21,8 @@ public class ImageSearch {
 	@Indexed(name = "category",type = "string")
     private String category;
 	
+	@Indexed(name = "dimension",type = "string")
+    private String dimension;
 	
 	public Long getImageid() {
 		return imageid;
@@ -52,6 +54,14 @@ public class ImageSearch {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public String getDimension() {
+		return dimension;
+	}
+
+	public void setDimension(String dimension) {
+		this.dimension = dimension;
 	}
 
 	

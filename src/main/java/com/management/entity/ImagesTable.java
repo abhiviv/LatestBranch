@@ -35,6 +35,8 @@ public class ImagesTable extends Audit<String> {
 	@JoinColumn(name = "Id", nullable = false)
 	@JsonIgnore
 	private Registration registration;
+	
+	private String imageDimension;
 
 	public Long getImageId() {
 		return imageId;
@@ -74,6 +76,14 @@ public class ImagesTable extends Audit<String> {
 
 	public void setRegistration(Registration registration) {
 		this.registration = registration;
+	}
+
+	public String getImageDimension() {
+		return imageDimension;
+	}
+
+	public void setImageDimension(String imageDimension) {
+		this.imageDimension = imageDimension;
 	}
 	
 	

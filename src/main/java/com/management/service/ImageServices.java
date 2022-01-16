@@ -1,5 +1,7 @@
 package com.management.service;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -63,12 +66,13 @@ public class ImageServices {
         try {
         	ImageCategory imageCategory=categoryRepository.findById(id).get();
         	List<ImagesTable>imagesTable=new ArrayList<>();
-        	createDirIfNotExist(imageCategory.getCategoryName());
         	Arrays.asList(files).stream().forEach(file -> {
                 byte[] bytes = new byte[0];
                 try {
                     bytes = file.getBytes();
-                    Files.write(Paths.get(FileUtil.folderPath+"\\" + imageCategory.getCategoryName() + "\\" + file.getOriginalFilename()), bytes);
+                    BufferedImage dimension = ImageIO.read(new ByteArrayInputStream(bytes));
+                    createDirIfNotExist(imageCategory.getCategoryName(),dimension.getWidth(),dimension.getHeight());
+                    Files.write(Paths.get(FileUtil.folderPath+"\\" + imageCategory.getCategoryName() + "\\"+dimension.getWidth()+"x"+dimension.getHeight()+"\\" + file.getOriginalFilename()), bytes);
                     ImagesTable img=new ImagesTable();
                     	img.setImages(file.getOriginalFilename());
                     	img.setRegistration(loginusers);
@@ -76,6 +80,7 @@ public class ImageServices {
                     	String details=file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf('.'));
                     	details.replace('-', ' ');    
                     	img.setImageDetails(details);
+                    	img.setImageDimension(dimension.getWidth()+"x"+dimension.getHeight());
                     	imagesTable.add(img);	
                 } catch (IOException e) {
                    logger.error("error", e);
@@ -88,6 +93,7 @@ public class ImageServices {
             	image.setImageName(im.getImages());
             	image.setImageDescription(im.getImageDetails());
             	image.setCategory(imageCategory.getCategoryName());
+            	image.setDimension(im.getImageDimension());
             	solrRepository.save(image);
         	});
         	
@@ -101,8 +107,8 @@ public class ImageServices {
 		
 	}
 	
-	private void createDirIfNotExist(String string) {
-        File directory = new File(FileUtil.folderPath+"\\"+string+"\\");
+	private void createDirIfNotExist(String string,int width,int height) {
+        File directory = new File(FileUtil.folderPath+"\\"+string+"\\"+width+"x"+height+"\\");
         if (! directory.exists()){
             directory.mkdirs();
         }

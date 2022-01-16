@@ -12,7 +12,7 @@ import com.management.entity.ImageSearch;
 
 public interface SolrRepository extends SolrCrudRepository<ImageSearch, Long> {
 
-	@Query(fields = { "category", "id","iname" })
+	@Query(value="idesc:*?0* OR category:*?0* OR dimension:?0*",fields = { "category","id","iname","dimension"})
 	List<ImageSearch> findByCategoryStartingWith(String name);
 	
 	@Query(value = "idesc:?0")
