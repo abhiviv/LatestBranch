@@ -85,10 +85,6 @@ public class CategoryServices {
 		    categoryRepository.save(category);
 		try {
 			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-//			String path1="C:\\temp\\"+category.getCategoryName()+"\\"+ file.getOriginalFilename();
-//			ImageResize imageResize=new ImageResize(path1);
-//			Thread t1=new Thread(imageResize);
-//			t1.start();
 		} catch (IOException e) {
 			logger.error("Invalid Size:",e.getMessage());
 			e.printStackTrace();

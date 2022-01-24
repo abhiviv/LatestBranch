@@ -36,6 +36,8 @@ public class ImagesTable extends Audit<String> {
 	@JsonIgnore
 	private Registration registration;
 	
+	private String resizeImages;
+	
 	private String imageDimension;
 
 	public Long getImageId() {
@@ -84,6 +86,14 @@ public class ImagesTable extends Audit<String> {
 
 	public void setImageDimension(String imageDimension) {
 		this.imageDimension = imageDimension;
+	}
+
+	public String getResizeImages() {
+		return resizeImages;
+	}
+
+	public void setResizeImages(String resizeImages) {
+		this.resizeImages = resizeImages;
 	}
 	
 	

@@ -12,19 +12,32 @@ import org.apache.commons.io.FilenameUtils;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.management.entity.ImagesTable;
+import com.management.repository.ImageRepository;
 
 
 public class ImageResize extends Thread  {
+	
 	private static final Logger logger = LoggerFactory.getLogger(ImageResize.class);
 
 	private String PATH;
 
-    private String imageFolder=FileUtil.ResizePath;
+    private String imageFolder;
 
     private Integer imageSize=1000;
 	
-	public ImageResize(String pATH) {
+    private Long id;
+    
+    @Autowired
+    private ImageRepository imageRepository;
+    
+	public ImageResize(ImageRepository imageRepository,String pATH, String imgpath,Long ids) {
 		PATH = pATH;
+		imageFolder=imgpath;
+		id=ids;
+		this.imageRepository = imageRepository;
 	}
 //resize images
 	@Override
@@ -43,7 +56,10 @@ public class ImageResize extends Thread  {
 	            newImageFile.mkdirs();
 	            ImageIO.write(outputImage, "jpg", newImageFile);
 	            outputImage.flush();
-	           
+	            ImagesTable imagesTable2=imageRepository.findById(id).get();
+	            imagesTable2.setResizeImages(newFileName);
+	            imageRepository.save(imagesTable2);
+	            
 	        } catch (IOException e) {
 	            logger.error(e.getMessage(), e);
 	          
