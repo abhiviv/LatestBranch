@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
 import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ImageResize extends Thread  {
 
     private String imageFolder;
 
-    private Integer imageSize=1000;
+    private Integer imageSize=600;
 	
     private Long id;
     
@@ -47,7 +48,7 @@ public class ImageResize extends Thread  {
 			try {
 				File sourceFile=new File(PATH);
 	            BufferedImage bufferedImage = ImageIO.read(sourceFile);
-	            BufferedImage outputImage = Scalr.resize(bufferedImage, imageSize);
+	            BufferedImage outputImage = Scalr.resize(bufferedImage, Method.AUTOMATIC, imageSize);
 	            String newFileName = FilenameUtils.getBaseName(sourceFile.getName())
 	                    + "_" + imageSize.toString() + "."
 	                    + FilenameUtils.getExtension(sourceFile.getName());
