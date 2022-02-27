@@ -21,7 +21,7 @@ public class ImageMapper {
 		BeanUtils.copyProperties(imagesTable, imageDto);
 		imageDto.setCategoryName(imagesTable.getCategory().getCategoryName());
 		imageDto.setUploadBy(imagesTable.getRegistration().getName());
-		imageDto.setPath("http://localhost:8080/files/resizeImages/"+imagesTable.getCategory().getCategoryName()+"/"+imagesTable.getImageDimension()+"/"+imagesTable.getResizeImages());
+		imageDto.setPath("http://localhost:8080/files/resizeImages/"+imagesTable.getCategory().getCategoryName()+"/"+imagesTable.getResizedimension()+"/"+imagesTable.getResizeImages());
 		return imageDto;
 	}
 	

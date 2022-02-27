@@ -40,8 +40,6 @@ public class ImageCategory extends Audit<String> {
 	        fetch = FetchType.EAGER)
     private Set<ImagesTable> imagesTables;
 	
-	@OneToOne(mappedBy = "categoryvalidation")
-	private CategoryImageValidation categoryImageValidation;
 
 	
 	public Long getCategoryId() {
@@ -93,14 +91,5 @@ public class ImageCategory extends Audit<String> {
 		this.imagesTables = imagesTables;
 	}
 
-	public CategoryImageValidation getCategoryImageValidation() {
-		return categoryImageValidation;
-	}
-
-	public void setCategoryImageValidation(CategoryImageValidation categoryImageValidation) {
-		this.categoryImageValidation = categoryImageValidation;
-	}
-	
-	
 	
 }

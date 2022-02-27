@@ -49,15 +49,20 @@ public class ImageResize extends Thread  {
 				File sourceFile=new File(PATH);
 	            BufferedImage bufferedImage = ImageIO.read(sourceFile);
 	            BufferedImage outputImage = Scalr.resize(bufferedImage, Method.AUTOMATIC, imageSize);
+	            int width          = outputImage.getWidth();
+	            int height         = outputImage.getHeight();
 	            String newFileName = FilenameUtils.getBaseName(sourceFile.getName())
 	                    + "_" + imageSize.toString() + "."
 	                    + FilenameUtils.getExtension(sourceFile.getName());
-	            Path path = Paths.get(imageFolder,newFileName);
+	            String newpath=imageFolder+'\\'+width+'x'+height;
+	            Path path = Paths.get(newpath,newFileName);
 	            File newImageFile = path.toFile();
 	            newImageFile.mkdirs();
 	            ImageIO.write(outputImage, "jpg", newImageFile);
 	            outputImage.flush();
 	            ImagesTable imagesTable2=imageRepository.findById(id).get();
+	            String dimension=String.valueOf(width)+'x'+String.valueOf(height);
+	            imagesTable2.setResizedimension(dimension);
 	            imagesTable2.setResizeImages(newFileName);
 	            imageRepository.save(imagesTable2);
 	            
