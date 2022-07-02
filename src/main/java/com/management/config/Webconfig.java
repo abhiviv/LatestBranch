@@ -72,7 +72,7 @@ public class Webconfig implements WebMvcConfigurer{
 	            registry
 		        .addResourceHandler("/files/**")
 		        .addResourceLocations("file:c://temp/");
-                //registry.addResourceHandler("/log/**").addResourceLocations("file:c://Log/");
+                registry.addResourceHandler("/log/**").addResourceLocations("file:c://Log/");
 	    }
 	 
 	 @Bean

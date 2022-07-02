@@ -88,18 +88,18 @@ public class ImageServices {
             });
         	imageRepository.saveAll(imagesTable);
         	imagesTable.forEach(im->{
-//        		ImageSearch image=new  ImageSearch();
-//            	image.setImageid(im.getImageId());
-//            	image.setImageName(im.getImages());
-//            	image.setImageDescription(im.getImageDetails());
-//            	image.setCategory(imageCategory.getCategoryName());
-//            	image.setDimension(im.getImageDimension());
-            	String imgpath=FileUtil.ResizePath+"\\" + imageCategory.getCategoryName();
-            	String path1=FileUtil.folderPath+"\\" + imageCategory.getCategoryName() + "\\"+im.getImageDimension()+"\\" + im.getImages();
-    			ImageResize imageResize=new ImageResize(imageRepository,path1,imgpath,im.getImageId());
-    			Thread t1=new Thread(imageResize);
-    			t1.start();
-            	//solrRepository.save(image);
+        		ImageSearch image=new  ImageSearch();
+            	image.setImageid(im.getImageId());
+            	image.setImageName(im.getImages());
+            	image.setImageDescription(im.getImageDetails());
+            	image.setCategory(imageCategory.getCategoryName());
+            	image.setDimension(im.getImageDimension());
+//            	String imgpath=FileUtil.ResizePath+"\\" + imageCategory.getCategoryName();
+//            	String path1=FileUtil.folderPath+"\\" + imageCategory.getCategoryName() + "\\"+im.getImageDimension()+"\\" + im.getImages();
+//    			ImageResize imageResize=new ImageResize(imageRepository,path1,imgpath,im.getImageId());
+//    			Thread t1=new Thread(imageResize);
+//    			t1.start();
+            	solrRepository.save(image);
         	});
         	
 
